@@ -9,19 +9,13 @@ package amountdecimal
 func New(amount string, decimal int) *AmountDecimal {
 	var data AmountDecimal
 
-	amount, err := amountChk(amount)
+	amountBitRat, err := amountRat(amount)
 	if err != nil {
 		data.err = err
 		return &data
 	}
 
-	amountRat, err := newRat(amount)
-	if err != nil {
-		data.err = err
-		return &data
-	}
-
-	data.amount = amountRat
+	data.amount = amountBitRat
 	data.decimal = decimal
 
 	return &data

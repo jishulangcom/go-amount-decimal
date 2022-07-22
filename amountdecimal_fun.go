@@ -65,12 +65,12 @@ func int32InSlice(list []int32, i int32) bool {
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 23:15
 func newRat(amount string) (*big.Rat, error) {
-	amountRat := new(big.Rat)
-	_, ok := amountRat.SetString(amount)
+	amountBigRat := new(big.Rat)
+	_, ok := amountBigRat.SetString(amount)
 	if !ok {
 		return nil, errors.New(errCodeMap[bigrat_setstring_fail])
 	}
-	return amountRat, nil
+	return amountBigRat, nil
 }
 
 // @title: 金额计算
@@ -84,13 +84,7 @@ func amountCalculation(f uint8, c *AmountDecimal, amount string) *AmountDecimal 
 		return c
 	}
 
-	amount, err = amountChk(amount)
-	if err != nil {
-		c.err = err
-		return c
-	}
-
-	amountRat, err := newRat(amount)
+	amountBitRat, err := amountRat(amount)
 	if err != nil {
 		c.err = err
 		return c
@@ -98,16 +92,29 @@ func amountCalculation(f uint8, c *AmountDecimal, amount string) *AmountDecimal 
 
 	switch f {
 	case add:
-		data.amount = new(big.Rat).Add(c.amount, amountRat)
+		data.amount = new(big.Rat).Add(c.amount, amountBitRat)
 	case sub:
-		data.amount = new(big.Rat).Sub(c.amount, amountRat)
+		data.amount = new(big.Rat).Sub(c.amount, amountBitRat)
 	case mul:
-		data.amount = new(big.Rat).Mul(c.amount, amountRat)
+		data.amount = new(big.Rat).Mul(c.amount, amountBitRat)
 	case div:
-		data.amount = new(big.Rat).Quo(c.amount, amountRat)
+		data.amount = new(big.Rat).Quo(c.amount, amountBitRat)
 	}
 
 	data.decimal = c.decimal
 
 	return &data
+}
+
+func amountRat(amount string) (*big.Rat, error) {
+	amount, err := amountChk(amount)
+	if err != nil {
+		return nil, err
+	}
+
+	amountBitRat, err := newRat(amount)
+	if err != nil {
+		return nil, err
+	}
+	return amountBitRat, nil
 }
