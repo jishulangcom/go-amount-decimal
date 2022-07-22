@@ -7,7 +7,7 @@ import (
 )
 
 func Test(t *testing.T) {
-	amount := amountdecimal.New("0.115987", 8)
-	result, err := amount.Add("1.397").Sub("1").String()
+	amount := amountdecimal.New("-.0115987", 8)
+	result, err := amount.Div("2").String()
 	fmt.Println(result, err)
 }

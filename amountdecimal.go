@@ -1,9 +1,5 @@
 package amountdecimal
 
-import (
-	"math/big"
-)
-
 // @title: 实例化
 // @param: amount string
 // @param: decimal int
@@ -13,7 +9,7 @@ import (
 func New(amount string, decimal int) *AmountDecimal {
 	var data AmountDecimal
 
-	err := newChk(amount, decimal)
+	amount, err := amountChk(amount)
 	if err != nil {
 		data.err = err
 		return &data
@@ -64,20 +60,5 @@ func (c *AmountDecimal) Mul(amount string) *AmountDecimal {
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) Div(amount string) *AmountDecimal {
-	var data AmountDecimal
-
-	if c.err != nil {
-		return c
-	}
-
-	amountRat, err := newRat(amount)
-	if err != nil {
-		c.err = err
-		return c
-	}
-
-	data.amount = new(big.Rat).Mul(c.amount, amountRat)
-	data.decimal = c.decimal
-
-	return &data
+	return amountCalculation(div, c, amount)
 }
