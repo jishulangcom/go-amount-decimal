@@ -6,7 +6,7 @@ package amountdecimal
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func New(amount interface{}, decimal int) *AmountDecimal {
+func New(amount interface{}) *AmountDecimal {
 	var data AmountDecimal
 
 	amountBitRat, err := amountRat(amount)
@@ -16,7 +16,6 @@ func New(amount interface{}, decimal int) *AmountDecimal {
 	}
 
 	data.amount = amountBitRat
-	data.decimal = decimal
 
 	return &data
 }

@@ -12,7 +12,7 @@ import (
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) String() (amountStr string, err error) {
+func (c *AmountDecimal) ToString(decimal int) (amountStr string, err error) {
 	defer func() {
 		if e := recover(); e != nil {
 			err = errors.New(errCodeMap[string_fail])
@@ -23,7 +23,7 @@ func (c *AmountDecimal) String() (amountStr string, err error) {
 		return "", c.err
 	}
 
-	amountStr = c.amount.FloatString(c.decimal)
+	amountStr = c.amount.FloatString(decimal)
 	return amountStr, nil
 }
 
@@ -32,8 +32,8 @@ func (c *AmountDecimal) String() (amountStr string, err error) {
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) JsonNumber() (amountJsonNumber json.Number, err error) {
-	amountStr, err := c.String()
+func (c *AmountDecimal) ToJsonNumber(decimal int) (amountJsonNumber json.Number, err error) {
+	amountStr, err := c.ToString(decimal)
 	if err != nil {
 		return json.Number(0), c.err
 	}
@@ -48,7 +48,7 @@ func (c *AmountDecimal) JsonNumber() (amountJsonNumber json.Number, err error) {
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) BigRat() (*big.Rat, error) {
+func (c *AmountDecimal) ToBigRat(decimal int) (*big.Rat, error) {
 	return c.amount, c.err
 }
 
@@ -57,18 +57,18 @@ func (c *AmountDecimal) BigRat() (*big.Rat, error) {
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) BigInt() (*big.Int, error) {
-	expStr := fmt.Sprintf("1e%d", c.decimal)
+func (c *AmountDecimal) ToBigInt(decimal int) (*big.Int, error) {
+	expStr := fmt.Sprintf("1e%d", decimal)
 	bigexp := new(big.Rat)
 	_, ok := bigexp.SetString(expStr)
 	if !ok {
-		return nil, errors.New("xxxxx")
+		return nil, errors.New(errCodeMap[bigrat_setstring_fail])
 	}
 
 	result := new(bigRat).Mul(c.amount, bigexp)
 	amountBigInt, ok :=new(big.Int).SetString(result.FloatString(0), 10)
 	if !ok {
-		return nil, errors.New("sssssssssssss")
+		return nil, errors.New(errCodeMap[bigint_setstring_fail])
 	}
 
 	return amountBigInt, nil

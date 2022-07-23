@@ -3,8 +3,8 @@ package amountdecimal
 import (
 	"errors"
 	"fmt"
+	"github.com/jishulangcom/go-fun"
 	"math/big"
-	"reflect"
 )
 
 // @title: 获取amount的*big.Rat
@@ -15,7 +15,7 @@ func amountRat(amount interface{}) (*big.Rat, error) {
 		return nil, errors.New(errCodeMap[amount_type_wrong])
 	}
 
-	amountType := getType(amount)
+	amountType := fun.GetType(amount)
 
 	// 指针类型
 	if amountType == type_ptr {
@@ -40,7 +40,7 @@ func amountRat(amount interface{}) (*big.Rat, error) {
 		return nil, err
 	}
 
-	amountStr, err = amountChk(amountStr)
+	amountStr, err = amountStrChk(amountStr)
 	if err != nil {
 		return nil, err
 	}
@@ -52,19 +52,12 @@ func amountRat(amount interface{}) (*big.Rat, error) {
 	return amountBitRat, nil
 }
 
-// @title: 获取数据类型
-// @auth: 技术狼(jishulang.com)
-// @date: 2022/7/21 23:15
-func getType(variable interface{}) string {
-	return reflect.TypeOf(variable).Kind().String()
-}
-
 // @title: 金额校验
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 23:15
-func amountChk(amount string) (string, error) {
+func amountStrChk(amount string) (string, error) {
 	if len(amount) == 0 {
-		return amount, errors.New(errCodeMap[amount_not_numeric])
+		return amount, errors.New(errCodeMap[amount_empty])
 	}
 
 	var isSpot bool
@@ -178,8 +171,6 @@ func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDec
 	case div:
 		data.amount = new(bigRat).Quo(c.amount, amountBitRat)
 	}
-
-	data.decimal = c.decimal
 
 	return &data
 }

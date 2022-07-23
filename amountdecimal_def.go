@@ -6,7 +6,6 @@ import (
 
 type AmountDecimal struct {
 	amount  *big.Rat // 金额
-	decimal int      // 精度
 	err     error
 }
 
@@ -40,6 +39,7 @@ const (
 	bigint_setstring_fail
 	string_fail
 	amount_not_numeric
+	amount_empty
 	amount_type_wrong
 )
 
@@ -52,10 +52,11 @@ func init() {
 	errCodeMap[bigrat_setstring_fail] = "big.Rat setString fail"
 	errCodeMap[bigint_setstring_fail] = "big.Int setString fail"
 	errCodeMap[string_fail] = "string fail"
+	errCodeMap[amount_empty] = "amount not empty"
 	errCodeMap[amount_not_numeric] = "amount is not of numeric type"
 	errCodeMap[amount_type_wrong] = "amount type is not supported"
 
-	amountElementList = []int32{'-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
+	amountElementList = []int32{'e', '+', '-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 
 	list := []string{
 		"float32", "float64",
