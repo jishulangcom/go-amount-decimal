@@ -10,7 +10,7 @@ import (
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) String() (str string, err error) {
+func (c *AmountDecimal) String() (amountStr string, err error) {
 	defer func() {
 		if e := recover(); e != nil {
 			err = errors.New(errCodeMap[string_fail])
@@ -21,8 +21,8 @@ func (c *AmountDecimal) String() (str string, err error) {
 		return "", c.err
 	}
 
-	str = c.amount.FloatString(c.decimal)
-	return str, nil
+	amountStr = c.amount.FloatString(c.decimal)
+	return amountStr, nil
 }
 
 // @title: 输出*big.Int

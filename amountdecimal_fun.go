@@ -2,6 +2,8 @@ package amountdecimal
 
 import (
 	"errors"
+	"fmt"
+	"github.com/jishulangcom/go-fun"
 	"math/big"
 )
 
@@ -15,14 +17,13 @@ func amountChk(amount string) (string, error) {
 
 	var isSpot bool
 	l := len(amount) - 1
-	anyReplaceList := []int32{'-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 	for k, i := range amount {
 		// 有空格
-		if i == spaceInt32 {
+		if i == int32_space {
 			return amount, errors.New(errCodeMap[amount_not_numeric])
 		}
 
-		if i == spotInt32 {
+		if i == int32_spot {
 			// 点号不能在末尾
 			if k == l {
 				return amount, errors.New(errCodeMap[amount_not_numeric])
@@ -37,11 +38,11 @@ func amountChk(amount string) (string, error) {
 		}
 
 		// 减号要在第一位
-		if i == negativeInt32 && k != 0 {
+		if i == int32_negative && k != 0 {
 			return amount, errors.New(errCodeMap[amount_not_numeric])
 		}
 
-		if !int32InSlice(anyReplaceList, i) {
+		if !int32InSlice(amountElementList, i) {
 			return amount, errors.New(errCodeMap[amount_not_numeric])
 		}
 	}
@@ -76,7 +77,7 @@ func newRat(amount string) (*big.Rat, error) {
 // @title: 金额计算
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 22:43
-func amountCalculation(f uint8, c *AmountDecimal, amount string) *AmountDecimal {
+func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDecimal {
 	var err error
 	var data AmountDecimal
 
@@ -106,15 +107,68 @@ func amountCalculation(f uint8, c *AmountDecimal, amount string) *AmountDecimal 
 	return &data
 }
 
-func amountRat(amount string) (*big.Rat, error) {
-	amount, err := amountChk(amount)
+func amountRat(amount interface{}) (*big.Rat, error) {
+	if amount == nil {
+		return nil, errors.New(errCodeMap[amount_type_wrong])
+	}
+
+	amountType := fun.GetType(amount)
+
+	// 指针类型
+	if amountType == type_ptr {
+		// *big.Rat类型直接返回
+		amountBitRat,ok := amount.(*big.Rat)
+		if ok {
+			return amountBitRat, nil
+		}
+
+		// *big.Int转string
+		amountBitInt,ok := amount.(*big.Int)
+		if ok {
+			amountType = type_str
+			amount = amountBitInt.String()
+		} else {
+			return nil, errors.New(errCodeMap[amount_type_wrong])
+		}
+	}
+
+	amountStr, err := interfaceToString(amount, amountType)
 	if err != nil {
 		return nil, err
 	}
 
-	amountBitRat, err := newRat(amount)
+	amountStr, err = amountChk(amountStr)
+	if err != nil {
+		return nil, err
+	}
+
+	amountBitRat, err := newRat(amountStr)
 	if err != nil {
 		return nil, err
 	}
 	return amountBitRat, nil
+}
+
+// @title: 金额计算
+// @auth: 技术狼(jishulang.com)
+// @date: 2022/7/21 22:43
+func interfaceToString (amount interface{}, amountType string) (string, error){
+	amountStr := ""
+
+	if amount == nil {
+		return "", errors.New(errCodeMap[amount_type_wrong])
+	}
+
+	if amountType == type_str {
+		amountStr = fmt.Sprintf("%s", amount)
+		return amountStr, nil
+	}
+
+	if _, ok := numberTypeMap[amountType]; ok {
+		amountStr = fmt.Sprintf("%v", amount)
+		return amountStr, nil
+	}
+
+	fmt.Println("amountType:", amountType)
+	return "", errors.New(errCodeMap[amount_type_wrong])
 }

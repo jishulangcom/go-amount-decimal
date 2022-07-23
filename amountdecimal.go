@@ -6,7 +6,7 @@ package amountdecimal
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func New(amount string, decimal int) *AmountDecimal {
+func New(amount interface{}, decimal int) *AmountDecimal {
 	var data AmountDecimal
 
 	amountBitRat, err := amountRat(amount)
@@ -26,7 +26,7 @@ func New(amount string, decimal int) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Add(amount string) *AmountDecimal {
+func (c *AmountDecimal) Add(amount interface{}) *AmountDecimal {
 	return amountCalculation(add, c, amount)
 }
 
@@ -35,7 +35,7 @@ func (c *AmountDecimal) Add(amount string) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Sub(amount string) *AmountDecimal {
+func (c *AmountDecimal) Sub(amount interface{}) *AmountDecimal {
 	return amountCalculation(sub, c, amount)
 }
 
@@ -44,7 +44,7 @@ func (c *AmountDecimal) Sub(amount string) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Mul(amount string) *AmountDecimal {
+func (c *AmountDecimal) Mul(amount interface{}) *AmountDecimal {
 	return amountCalculation(mul, c, amount)
 }
 
@@ -53,6 +53,6 @@ func (c *AmountDecimal) Mul(amount string) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Div(amount string) *AmountDecimal {
+func (c *AmountDecimal) Div(amount interface{}) *AmountDecimal {
 	return amountCalculation(div, c, amount)
 }
