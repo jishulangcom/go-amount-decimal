@@ -10,6 +10,11 @@ type AmountDecimal struct {
 	err     error
 }
 
+type bigRat struct{
+	big.Rat
+}
+
+// AmountDecimal 计算方法
 const (
 	add = iota // 加法
 	sub        // 减法
@@ -23,8 +28,11 @@ const (
 	int32_space    = ' ' // 空格int32
 )
 
-const type_ptr = "ptr"
-const type_str = "string"
+// 数据类型
+const (
+	type_ptr = "ptr"
+	type_str = "string"
+)
 
 // errorcode
 const (
@@ -36,7 +44,7 @@ const (
 )
 
 var errCodeMap map[uint16]string
-var amountElementList []int32 // 金额组成元素
+var amountElementList []int32         // 金额组成元素
 var numberTypeMap map[string]struct{} // 数据类型集合
 
 func init() {
@@ -55,7 +63,7 @@ func init() {
 		"uint", "uint8", "uint16", "uint32", "uint64",
 	}
 	numberTypeMap = make(map[string]struct{})
-	for _,v := range list {
+	for _, v := range list {
 		numberTypeMap[v] = struct{}{}
 	}
 }

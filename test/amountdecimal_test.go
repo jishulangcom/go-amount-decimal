@@ -28,4 +28,13 @@ func Test(t *testing.T) {
 	amount := amountdecimal.New(amountBigInt, 8)
 	result, err := amount.Div("2.1").String()
 	fmt.Println(result, err)
+
+	result2, err2 := amount.Div("2.1").JsonNumber()
+	fmt.Println(result2, err2)
+
+	amountBigInt, err3 := amount.Div("2.1").BigInt()
+	fmt.Println(amountBigInt, err3)
+
+	ss, sok := amountdecimal.BigIntActualAmount(amountBigInt, 8)
+	fmt.Println(ss, sok)
 }
