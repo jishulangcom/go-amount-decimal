@@ -9,13 +9,13 @@ package amountdecimal
 func New(amount interface{}) *AmountDecimal {
 	var data AmountDecimal
 
-	amountBitRat, err := amountRat(amount)
+	amountBigRat, err := amountRat(amount)
 	if err != nil {
 		data.err = err
 		return &data
 	}
 
-	data.amount = amountBitRat
+	data.amount = amountBigRat
 
 	return &data
 }

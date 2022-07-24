@@ -30,7 +30,9 @@ const (
 // 数据类型
 const (
 	type_ptr = "ptr"
-	type_str = "string"
+	type_string = "string"
+	type_float32 = "float32"
+	type_float64 = "float64"
 )
 
 // errorcode
@@ -59,7 +61,7 @@ func init() {
 	amountElementList = []int32{'e', '+', '-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 
 	list := []string{
-		"float32", "float64",
+		//"float32", "float64",
 		"int", "int8", "int16", "int32", "int64",
 		"uint", "uint8", "uint16", "uint32", "uint64",
 	}
