@@ -1,5 +1,7 @@
 package amountdecimal
 
+import "errors"
+
 //----------------------------------------------------------------------------------------------------------------------
 func NewInt(amount int) *AmountDecimal {
 	return NewInt64(int64(amount))
@@ -122,6 +124,11 @@ func (c *AmountDecimal) DivInt(amount int) *AmountDecimal {
 
 func (c *AmountDecimal) DivInt64(amount int64) *AmountDecimal {
 	if c.err != nil {
+		return c
+	}
+
+	if amount == 0 {
+		c.err = errors.New(errCodeMap[amount_divisor_cannot])
 		return c
 	}
 

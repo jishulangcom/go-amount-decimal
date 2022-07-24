@@ -1,6 +1,9 @@
 package amountdecimal
 
-import "math/big"
+import (
+	"errors"
+	"math/big"
+)
 
 // @title: 金额计算
 // @auth: 技术狼(jishulang.com)
@@ -12,17 +15,13 @@ func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDec
 		return c
 	}
 
-	amountBigRat, err := amountRat(amount)
+	data := newAmountDecimal(amount)
 	if err != nil {
-		c.err = err
-		return c
+		return data
 	}
 
-	return calculationBigRat(f, c.amount, amountBigRat)
+	return calculationBigRat(f, c.amount, data.amount)
 }
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 func calculationBigRat(f uint8, amount *big.Rat, amount2 *big.Rat) *AmountDecimal {
@@ -37,6 +36,10 @@ func calculationBigRat(f uint8, amount *big.Rat, amount2 *big.Rat) *AmountDecima
 	case mul:
 		data.amount = new(bigRat).Mul(amount, amount2)
 	case div:
+		if amount.String() == "0/1" {
+			data.err = errors.New(errCodeMap[amount_divisor_cannot])
+			return &data
+		}
 		data.amount = new(bigRat).Quo(amount, amount2)
 	}
 

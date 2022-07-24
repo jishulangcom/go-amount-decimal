@@ -5,17 +5,18 @@ import (
 )
 
 type AmountDecimal struct {
-	amount  *big.Rat // 金额
-	err     error
+	amount *big.Rat // 金额
+	err    error
 }
 
-type bigRat struct{
+type bigRat struct {
 	big.Rat
 }
 
 // AmountDecimal 计算方法
 const (
-	add = iota // 加法
+	not = iota // 无
+	add        // 加法
 	sub        // 减法
 	mul        // 乘法
 	div        // 除法
@@ -29,8 +30,8 @@ const (
 
 // 数据类型
 const (
-	type_ptr = "ptr"
-	type_string = "string"
+	type_ptr     = "ptr"
+	type_string  = "string"
 	type_float32 = "float32"
 	type_float64 = "float64"
 )
@@ -43,6 +44,8 @@ const (
 	amount_not_numeric
 	amount_empty
 	amount_type_wrong
+	amount_type_conversion
+	amount_divisor_cannot
 )
 
 var errCodeMap map[uint16]string
@@ -57,6 +60,8 @@ func init() {
 	errCodeMap[amount_empty] = "amount not empty"
 	errCodeMap[amount_not_numeric] = "amount is not of numeric type"
 	errCodeMap[amount_type_wrong] = "amount type is not supported"
+	errCodeMap[amount_type_conversion] = "amount type conversion failed"
+	errCodeMap[amount_divisor_cannot] = "divisor cannot be 0"
 
 	amountElementList = []int32{'e', '+', '-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 

@@ -7,17 +7,7 @@ package amountdecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
 func New(amount interface{}) *AmountDecimal {
-	var data AmountDecimal
-
-	amountBigRat, err := amountRat(amount)
-	if err != nil {
-		data.err = err
-		return &data
-	}
-
-	data.amount = amountBigRat
-
-	return &data
+	return newAmountDecimal(amount)
 }
 
 // @title: 加法

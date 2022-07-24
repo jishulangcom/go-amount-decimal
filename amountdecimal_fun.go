@@ -2,12 +2,130 @@ package amountdecimal
 
 import (
 	"errors"
-	"fmt"
-	"github.com/jishulangcom/go-fun"
 	"math/big"
-	"strconv"
 )
 
+func newAmountDecimal(amount interface{}) *AmountDecimal {
+	var data AmountDecimal
+	if amount == nil {
+		data.err = errors.New(errCodeMap[amount_type_wrong])
+		return &data
+	}
+
+	switch amount.(type) {
+	case string:
+		val, ok := amount.(string)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewString(val)
+	case float64:
+		val, ok := amount.(float64)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewFloat64(val)
+	case float32:
+		val, ok := amount.(float32)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewFloat32(val)
+	case int:
+		val, ok := amount.(int)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewInt(val)
+	case int8:
+		val, ok := amount.(int8)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewInt8(val)
+	case int16:
+		val, ok := amount.(int16)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewInt16(val)
+	case int32:
+		val, ok := amount.(int32)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewInt32(val)
+	case int64:
+		val, ok := amount.(int64)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewInt64(val)
+	case uint:
+		val, ok := amount.(uint)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewUint(val)
+	case uint8:
+		val, ok := amount.(uint8)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewUint8(val)
+	case uint16:
+		val, ok := amount.(uint16)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewUint16(val)
+	case uint32:
+		val, ok := amount.(uint32)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewUint32(val)
+	case uint64:
+		val, ok := amount.(uint64)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewUint64(val)
+	case *big.Int:
+		val, ok := amount.(*big.Int)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewBigInt(val)
+	case *big.Rat:
+		val, ok := amount.(*big.Rat)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewBigRat(val)
+
+	default:
+		data.err = errors.New(errCodeMap[amount_type_wrong])
+		return &data
+	}
+}
+
+/*
 // @title: 获取amount的*big.Rat
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 23:15
@@ -153,4 +271,4 @@ func interfaceToString (amount interface{}, amountType string) (string, error){
 	fmt.Println("amountType:", amountType)
 	return "", errors.New(errCodeMap[amount_type_wrong])
 }
-
+*/
