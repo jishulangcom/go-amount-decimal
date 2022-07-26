@@ -12,7 +12,7 @@ import (
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToString(decimal int) (amountStr string, err error) {
+func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, err error) {
 	defer func() {
 		if e := recover(); e != nil {
 			err = errors.New(errCodeMap[string_fail])
@@ -20,6 +20,16 @@ func (c *AmountDecimal) ToString(decimal int) (amountStr string, err error) {
 	}()
 
 	if c.err != nil {
+		return "", c.err
+	}
+
+	if decimalOrCoin == nil {
+		amountStr = c.amount.String()
+		return amountStr, nil
+	}
+
+	decimal, err := getDecimal(decimalOrCoin)
+	if err != nil {
 		return "", c.err
 	}
 
@@ -32,8 +42,8 @@ func (c *AmountDecimal) ToString(decimal int) (amountStr string, err error) {
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToJsonNumber(decimal int) (amountJsonNumber json.Number, err error) {
-	amountStr, err := c.ToString(decimal)
+func (c *AmountDecimal) ToJsonNumber(decimalOrCoin *interface{}) (amountJsonNumber json.Number, err error) {
+	amountStr, err := c.ToString(decimalOrCoin)
 	if err != nil {
 		return json.Number(0), c.err
 	}
@@ -48,7 +58,7 @@ func (c *AmountDecimal) ToJsonNumber(decimal int) (amountJsonNumber json.Number,
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToBigRat(decimal int) (*big.Rat, error) {
+func (c *AmountDecimal) ToBigRat(decimalOrCoin *interface{}) (*big.Rat, error) {
 	return c.amount, c.err
 }
 
@@ -57,8 +67,13 @@ func (c *AmountDecimal) ToBigRat(decimal int) (*big.Rat, error) {
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToBigInt(decimal int) (*big.Int, error) {
-	expStr := fmt.Sprintf("1e%d", decimal)
+func (c *AmountDecimal) ToBigInt(decimalOrCoin *interface{}) (*big.Int, error) {
+	amountStr := ""
+	if decimalOrCoin == nil {
+		amountStr = c.amount.String()
+	}
+
+	expStr := fmt.Sprintf("1e%s", amountStr)
 	bigexp := new(big.Rat)
 	_, ok := bigexp.SetString(expStr)
 	if !ok {

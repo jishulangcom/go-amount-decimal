@@ -22,7 +22,7 @@ func BigIntTimeConsuming1() {
 
 	list := randBigIntList(bigIntMin, bigIntMax, bigIntNub)
 	for _, v := range list {
-		v2 := RandBigInt(0, bigIntMax)
+		v2 := randBigInt(0, bigIntMax)
 		amountdecimal.New(v).Add(v2).ToString(bigIntDecimal)
 	}
 
@@ -38,7 +38,7 @@ func BigIntTimeConsuming2() {
 
 	list := randBigIntList(bigIntMin, bigIntMax, bigIntNub)
 	for _, v := range list {
-		v2 := RandBigInt(0, bigIntMax)
+		v2 := randBigInt(0, bigIntMax)
 		v2d := decimal.NewFromBigInt(v2, int32(bigIntDecimal))
 		decimal.NewFromBigInt(v, int32(bigIntDecimal)).Add(v2d).StringFixed(int32(bigIntDecimal))
 	}

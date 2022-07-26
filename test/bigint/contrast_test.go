@@ -27,7 +27,7 @@ func TestBigInt(t *testing.T) {
 }
 
 func add(v *big.Int)  {
-	v2 := RandBigInt(0, bigIntMax)
+	v2 := randBigInt(0, bigIntMax)
 	fmt.Printf("\n\r ----------%v + %v ------------------------\n", v, v2)
 
 
@@ -54,7 +54,7 @@ func add(v *big.Int)  {
 }
 
 func sub(v *big.Int)  {
-	v2 := RandBigInt(0, bigIntMax)
+	v2 := randBigInt(0, bigIntMax)
 	fmt.Printf("\n\r ----------%v - %v ------------------------\n", v, v2)
 
 
@@ -81,7 +81,7 @@ func sub(v *big.Int)  {
 }
 
 func mul(v *big.Int)  {
-	v2 := RandBigInt(0, bigIntMax)
+	v2 := randBigInt(0, bigIntMax)
 	fmt.Printf("\n\r ----------%v + %v ------------------------\n", v, v2)
 
 
@@ -108,7 +108,7 @@ func mul(v *big.Int)  {
 }
 
 func div(v *big.Int)  {
-	v2 := RandBigInt(0, bigIntMax)
+	v2 := randBigInt(0, bigIntMax)
 	fmt.Printf("\n\r ----------%v + %v ------------------------\n", v, v2)
 
 

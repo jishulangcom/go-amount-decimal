@@ -1,8 +1,11 @@
 package amountdecimal
 
 import (
+	"encoding/json"
 	"errors"
+	"github.com/jishulangcom/go-fun"
 	"math/big"
+	"strconv"
 )
 
 func newAmountDecimal(amount interface{}) *AmountDecimal {
@@ -124,6 +127,92 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 		return &data
 	}
 }
+
+// @title: 获取精度
+// @auth: 技术狼(jishulang.com)
+// @date: 2022/7/21 23:15
+func getDecimal(decimalOrCoin interface{}) (int, error) {
+	decimalType := fun.GetType(decimalOrCoin)
+
+	if decimalType == type_string {
+		coin := InterfaceToStr(decimalOrCoin)
+		coin = fun.Strtoupper(coin)
+		if coinInfo, ok := CoinMap[coin]; ok {
+			return coinInfo.Decimal, nil
+		}
+
+		return 0, errors.New("coin wrong")
+	}
+
+	if _, ok := numberTypeMap[decimalType]; ok {
+		decimal, ok2 := decimalOrCoin.(int)
+		if ok2{
+			return decimal, nil
+		}
+		return 0, errors.New("decimal wrong")
+	}
+
+
+
+	return 0, errors.New("decimal type wrong")
+}
+
+func InterfaceToStr(val interface{}) string {
+	var str string
+
+	if val == nil {
+		return str
+	}
+
+	switch val.(type) {
+	case float64:
+		ft := val.(float64)
+		str = strconv.FormatFloat(ft, 'f', -1, 64)
+	case float32:
+		ft := val.(float32)
+		str = strconv.FormatFloat(float64(ft), 'f', -1, 64)
+	case int:
+		it := val.(int)
+		str = strconv.Itoa(it)
+	case uint:
+		it := val.(uint)
+		str = strconv.Itoa(int(it))
+	case int8:
+		it := val.(int8)
+		str = strconv.Itoa(int(it))
+	case uint8:
+		it := val.(uint8)
+		str = strconv.Itoa(int(it))
+	case int16:
+		it := val.(int16)
+		str = strconv.Itoa(int(it))
+	case uint16:
+		it := val.(uint16)
+		str = strconv.Itoa(int(it))
+	case int32:
+		it := val.(int32)
+		str = strconv.Itoa(int(it))
+	case uint32:
+		it := val.(uint32)
+		str = strconv.Itoa(int(it))
+	case int64:
+		it := val.(int64)
+		str = strconv.FormatInt(it, 10)
+	case uint64:
+		it := val.(uint64)
+		str = strconv.FormatUint(it, 10)
+	case string:
+		str = val.(string)
+	case []byte:
+		str = string(val.([]byte))
+	default:
+		newValue, _ := json.Marshal(val)
+		str = string(newValue)
+	}
+
+	return str
+}
+
 
 /*
 // @title: 获取amount的*big.Rat

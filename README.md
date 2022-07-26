@@ -12,7 +12,7 @@ var (
 
 === RUN   TestFloat64
 ----------60.466028797961954 + 65.4829167211246 ------------------------
-AmountDecimal result:<nil>, 125.9489455190865498934727 
+AmountDecimal  result:<nil>, 125.9489455190865498934727 
 AmountDecimal result2:<nil>, 125.9489455190865498934727 
 Decimal result:<nil>, 125.9489455190865540000000 
 --- FAIL: TestFloat64 (0.00s)

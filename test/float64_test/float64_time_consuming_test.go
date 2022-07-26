@@ -1,4 +1,4 @@
-package inttest
+package float64test
 
 import (
 	"fmt"
@@ -8,22 +8,22 @@ import (
 
 // amountdecimal与decimal耗时测试
 func TestIntTimeConsuming(t *testing.T) {
-	list := randIntList(intMin, intMax, intNub)
+	list := randFloat64List(float64Min, float64Max, float64Decimal)
 
-	intTimeConsuming1(list)
+	float64TimeConsuming1(list)
 	fmt.Println("")
-	intTimeConsuming2(list)
+	float64TimeConsuming2(list)
 	fmt.Println("")
-	intTimeConsuming3(list)
+	float64TimeConsuming3(list)
 }
 
 // amountdecimal耗时
-func intTimeConsuming1(list []int) {
+func float64TimeConsuming1(list []float64) {
 	start := time.Now().UnixNano()
 	fmt.Println("开始时间：", start)
 
 	for _, v := range list {
-		v2 := randInt(intMin, intMax)
+		v2 := randFloat64(float64Min, float64Max)
 		calculation_amountdecimal(add, v, v2)
 		calculation_amountdecimal(sub, v, v2)
 		calculation_amountdecimal(mul, v, v2)
@@ -36,12 +36,12 @@ func intTimeConsuming1(list []int) {
 }
 
 // amountdecimal2耗时
-func intTimeConsuming2(list []int) {
+func float64TimeConsuming2(list []float64) {
 	start := time.Now().UnixNano()
 	fmt.Println("开始时间：", start)
 
 	for _, v := range list {
-		v2 := randInt(intMin, intMax)
+		v2 := randFloat64(float64Min, float64Max)
 		calculation_amountdecimal2(add, v, v2)
 		calculation_amountdecimal2(sub, v, v2)
 		calculation_amountdecimal2(mul, v, v2)
@@ -54,12 +54,12 @@ func intTimeConsuming2(list []int) {
 }
 
 // decimal耗时
-func intTimeConsuming3(list []int) {
+func float64TimeConsuming3(list []float64) {
 	start := time.Now().UnixNano()
 	fmt.Println("开始时间：", start)
 
 	for _, v := range list {
-		v2 := randInt(intMin, intMin)
+		v2 := randFloat64(float64Min, float64Max)
 		calculation_decimal(add, v, v2)
 		calculation_decimal(sub, v, v2)
 		calculation_decimal(mul, v, v2)
