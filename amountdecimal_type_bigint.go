@@ -61,7 +61,6 @@ func (c *AmountDecimal) DivBigInt(amount *big.Int) *AmountDecimal {
 	return calculationBigRat(div, c.amount, amountDecimal.amount)
 }
 
-
 // @title: 获取*big.Int的实际金额
 // @param: amount *big.Int
 // @param: decimal int
@@ -83,6 +82,3 @@ func BigIntActualAmount(amount *big.Int, decimal int) (string, error) {
 	result := new(bigRat).Mul(ad.amount, expAd.amount)
 	return result.FloatString(decimal), nil
 }
-
-
-

@@ -6,6 +6,7 @@ import (
 
 type AmountDecimal struct {
 	amount *big.Rat // 金额
+	decimal int // 精度
 	err    error
 }
 
@@ -47,6 +48,8 @@ const (
 	amount_type_conversion
 	amount_divisor_cannot
 )
+
+var DefaultDecimal = 13 // 默认输出精度
 
 var errCodeMap map[uint16]string
 var amountElementList []int32         // 金额组成元素

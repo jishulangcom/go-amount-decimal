@@ -1,9 +1,14 @@
 package amountdecimal
 
+import (
+	"github.com/jishulangcom/go-fun"
+)
+
 //----------------------------------------------------------------------------------------------------------------------
 func NewFloat64(amount float64) *AmountDecimal {
 	var data AmountDecimal
 
+	data.decimal = fun.Float64Decimal(amount)
 	data.amount = new(bigRat).SetFloat64(amount)
 
 	return &data

@@ -1,3 +1,8 @@
+/*
+	amountdecimal
+	【包名:】金额的高精度计算类库
+	【作者:】技术狼(jishulang.com)
+*/
 package amountdecimal
 
 // @title: 实例化
@@ -15,8 +20,14 @@ func New(amount interface{}) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Add(amount interface{}) *AmountDecimal {
-	return amountCalculation(add, c, amount)
+func (c *AmountDecimal) Add(amounts ...interface{}) *AmountDecimal {
+	for _, amount := range amounts {
+		c = amountCalculation(add, c, amount)
+		if c.err != nil {
+			return c
+		}
+	}
+	return c
 }
 
 // @title: 减法
@@ -24,8 +35,14 @@ func (c *AmountDecimal) Add(amount interface{}) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Sub(amount interface{}) *AmountDecimal {
-	return amountCalculation(sub, c, amount)
+func (c *AmountDecimal) Sub(amounts ...interface{}) *AmountDecimal {
+	for _, amount := range amounts {
+		c = amountCalculation(sub, c, amount)
+		if c.err != nil {
+			return c
+		}
+	}
+	return c
 }
 
 // @title: 乘法
@@ -33,8 +50,14 @@ func (c *AmountDecimal) Sub(amount interface{}) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Mul(amount interface{}) *AmountDecimal {
-	return amountCalculation(mul, c, amount)
+func (c *AmountDecimal) Mul(amounts ...interface{}) *AmountDecimal {
+	for _, amount := range amounts {
+		c = amountCalculation(mul, c, amount)
+		if c.err != nil {
+			return c
+		}
+	}
+	return c
 }
 
 // @title: 除法
@@ -42,6 +65,12 @@ func (c *AmountDecimal) Mul(amount interface{}) *AmountDecimal {
 // @return: *AmountDecimal
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) Div(amount interface{}) *AmountDecimal {
-	return amountCalculation(div, c, amount)
+func (c *AmountDecimal) Div(amounts ...interface{}) *AmountDecimal {
+	for _, amount := range amounts {
+		c = amountCalculation(div, c, amount)
+		if c.err != nil {
+			return c
+		}
+	}
+	return c
 }

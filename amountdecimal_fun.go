@@ -10,6 +10,7 @@ import (
 
 func newAmountDecimal(amount interface{}) *AmountDecimal {
 	var data AmountDecimal
+
 	if amount == nil {
 		data.err = errors.New(errCodeMap[amount_type_wrong])
 		return &data
@@ -29,6 +30,7 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 			data.err = errors.New(errCodeMap[amount_type_conversion])
 			return &data
 		}
+
 		return NewFloat64(val)
 	case float32:
 		val, ok := amount.(float32)
@@ -121,11 +123,20 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 			return &data
 		}
 		return NewBigRat(val)
+	case *AmountDecimal:
+		val, ok := amount.(*AmountDecimal)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewBigRat(val.amount)
 
 	default:
-		data.err = errors.New(errCodeMap[amount_type_wrong])
-		return &data
+
 	}
+
+	data.err = errors.New(errCodeMap[amount_type_wrong])
+	return &data
 }
 
 // @title: 获取精度
@@ -136,7 +147,7 @@ func getDecimal(decimalOrCoin interface{}) (int, error) {
 
 	if decimalType == type_string {
 		coin := InterfaceToStr(decimalOrCoin)
-		coin = fun.Strtoupper(coin)
+		coin = fun.StrToUpper(coin)
 		if coinInfo, ok := CoinMap[coin]; ok {
 			return coinInfo.Decimal, nil
 		}
@@ -146,13 +157,11 @@ func getDecimal(decimalOrCoin interface{}) (int, error) {
 
 	if _, ok := numberTypeMap[decimalType]; ok {
 		decimal, ok2 := decimalOrCoin.(int)
-		if ok2{
+		if ok2 {
 			return decimal, nil
 		}
 		return 0, errors.New("decimal wrong")
 	}
-
-
 
 	return 0, errors.New("decimal type wrong")
 }
@@ -212,7 +221,6 @@ func InterfaceToStr(val interface{}) string {
 
 	return str
 }
-
 
 /*
 // @title: 获取amount的*big.Rat

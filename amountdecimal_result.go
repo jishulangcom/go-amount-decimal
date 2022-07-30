@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"strings"
 )
 
 // @title: 输出string
@@ -25,7 +26,14 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 
 	if decimalOrCoin == nil {
 		amountStr = c.amount.String()
-		return amountStr, nil
+		amountArr := strings.Split( amountStr, "/")
+		if amountArr[1] == "1" {
+			amountStr = amountArr[0]
+			return amountStr, nil
+		}
+
+		//decimalOrCoin = DefaultDecimal
+		decimalOrCoin = c.decimal
 	}
 
 	decimal, err := getDecimal(decimalOrCoin)
@@ -34,6 +42,7 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 	}
 
 	amountStr = c.amount.FloatString(decimal)
+
 	return amountStr, nil
 }
 
@@ -58,7 +67,7 @@ func (c *AmountDecimal) ToJsonNumber(decimalOrCoin *interface{}) (amountJsonNumb
 // @description:
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToBigRat(decimalOrCoin *interface{}) (*big.Rat, error) {
+func (c *AmountDecimal) ToBigRat() (*big.Rat, error) {
 	return c.amount, c.err
 }
 
@@ -81,7 +90,7 @@ func (c *AmountDecimal) ToBigInt(decimalOrCoin *interface{}) (*big.Int, error) {
 	}
 
 	result := new(bigRat).Mul(c.amount, bigexp)
-	amountBigInt, ok :=new(big.Int).SetString(result.FloatString(0), 10)
+	amountBigInt, ok := new(big.Int).SetString(result.FloatString(0), 10)
 	if !ok {
 		return nil, errors.New(errCodeMap[bigint_setstring_fail])
 	}
