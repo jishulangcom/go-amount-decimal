@@ -9,7 +9,6 @@ import (
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 22:43
 func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDecimal {
-	var err error
 	var data *AmountDecimal
 
 	if c.err != nil {
@@ -17,7 +16,7 @@ func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDec
 	}
 
 	amountD := newAmountDecimal(amount)
-	if err != nil {
+	if amountD.err != nil {
 		return amountD
 	}
 
@@ -28,6 +27,7 @@ func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDec
 		data.decimal = c.decimal + amountD.decimal
 	} else if f == div {
 		data.decimal = DefaultDecimal
+
 	} else {
 		if c.decimal > amountD.decimal {
 			data.decimal = c.decimal

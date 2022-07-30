@@ -109,6 +109,13 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 			return &data
 		}
 		return NewUint64(val)
+	case json.Number:
+		val, ok := amount.(json.Number)
+		if !ok {
+			data.err = errors.New(errCodeMap[amount_type_conversion])
+			return &data
+		}
+		return NewJsonNumber(val)
 	case *big.Int:
 		val, ok := amount.(*big.Int)
 		if !ok {

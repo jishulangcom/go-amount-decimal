@@ -79,7 +79,7 @@ func (c *AmountDecimal) ToBigRat() (*big.Rat, error) {
 func (c *AmountDecimal) ToBigInt(decimalOrCoin *interface{}) (*big.Int, error) {
 	amountStr := ""
 	if decimalOrCoin == nil {
-		amountStr = c.amount.String()
+
 	}
 
 	expStr := fmt.Sprintf("1e%s", amountStr)

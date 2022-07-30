@@ -21,13 +21,7 @@ func New(amount interface{}) *AmountDecimal {
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) Add(amounts ...interface{}) *AmountDecimal {
-	for _, amount := range amounts {
-		c = amountCalculation(add, c, amount)
-		if c.err != nil {
-			return c
-		}
-	}
-	return c
+	return c.amounts(add, amounts...)
 }
 
 // @title: 减法
@@ -36,13 +30,7 @@ func (c *AmountDecimal) Add(amounts ...interface{}) *AmountDecimal {
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) Sub(amounts ...interface{}) *AmountDecimal {
-	for _, amount := range amounts {
-		c = amountCalculation(sub, c, amount)
-		if c.err != nil {
-			return c
-		}
-	}
-	return c
+	return c.amounts(sub, amounts...)
 }
 
 // @title: 乘法
@@ -51,13 +39,7 @@ func (c *AmountDecimal) Sub(amounts ...interface{}) *AmountDecimal {
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) Mul(amounts ...interface{}) *AmountDecimal {
-	for _, amount := range amounts {
-		c = amountCalculation(mul, c, amount)
-		if c.err != nil {
-			return c
-		}
-	}
-	return c
+	return c.amounts(mul, amounts...)
 }
 
 // @title: 除法
@@ -66,11 +48,17 @@ func (c *AmountDecimal) Mul(amounts ...interface{}) *AmountDecimal {
 // @auth: 技术狼(jishulang.com)
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) Div(amounts ...interface{}) *AmountDecimal {
+	return c.amounts(div, amounts...)
+}
+
+func (c *AmountDecimal) amounts(f uint8, amounts ...interface{}) *AmountDecimal {
+	var ad *AmountDecimal
+	ad = c
 	for _, amount := range amounts {
-		c = amountCalculation(div, c, amount)
-		if c.err != nil {
-			return c
+		ad = amountCalculation(f, ad, amount)
+		if ad.err != nil {
+			return ad
 		}
 	}
-	return c
+	return ad
 }
