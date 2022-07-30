@@ -33,9 +33,9 @@ Decimal library requires Go version `>=1.7`
 ```go
 amount type：
 	【"string", "json.Number"】
-	【"float32", "float64"】
-	【"int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64"】
-	【"*big.Int", "*big.Rat"】
+    【"float32", "float64"】
+    【"int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64"】
+    【"*big.Int", "*big.Rat"】
 
 calculation func：
    .Add(amounts ...interface{}) // addition
@@ -68,19 +68,19 @@ func main() {
 	bi := new(big.Int).SetInt64(4)
 	var decimal int = 5
 
-	//---------------------【Basic Usage】-----------------------------------------------------------------------
+	//---------------------【Basic Usage】-------------------------------------------------
 	// 0.5+1 = (1.5)-2 = (-0.5)*3 = (-1.5)/4
 	amountA1, errA1 := amountdecimal.New(f).Add(s).Sub(i).Mul(j).Div(bi).ToString(decimal)
 	fmt.Println(amountA1, errA1) // -0.37500 <nil>
 
 
-	//---------------------【Multiple Amounts】-----------------------------------------------------------
+	//---------------------【Multiple Amounts】--------------------------------------------
 	// 0.5 +1 +2 +3 +4 +5
 	amountB1, errB1 := amountdecimal.New(f).Add(s, i, j, bi).ToString(decimal)
 	fmt.Println(amountB1, errB1) // 10.50000 <nil>
 
 
-	//---------------------【Coin Decimal】------------------------------------------------------------------------
+	//---------------------【Coin Decimal】-------------------------------------------------
 	amount := 100
 	fee := 0.001
 	amountC1, errC1 := amountdecimal.New(amount).Mul(fee).ToString("BTC")
