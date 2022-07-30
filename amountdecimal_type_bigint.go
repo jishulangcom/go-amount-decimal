@@ -1,73 +1,87 @@
 package amountdecimal
 
 import (
+	"errors"
 	"fmt"
 	"math/big"
 )
 
+// @title: initialization *big.Int type
+// @auth: jishulang.com
+// @date: 2022/7/30 22:52
 func NewBigInt(amount *big.Int) *AmountDecimal {
 	return NewString(amount.String())
 }
 
-func (c *AmountDecimal) AddBigInt(amount *big.Int) *AmountDecimal {
+// @title: addition *big.Int type
+// @auth: jishulang.com
+// @date: 2022/7/30 22:52
+func (c *AmountDecimal) AddBigInt(amounts ...*big.Int) *AmountDecimal {
+	return c.amountsBigInt(add, amounts...)
+}
+
+// @title: subtraction *big.Int type
+// @auth: jishulang.com
+// @date: 2022/7/30 22:52
+func (c *AmountDecimal) SubBigInt(amounts ...*big.Int) *AmountDecimal {
+	return c.amountsBigInt(sub, amounts...)
+}
+
+// @title: multiplication *big.Int type
+// @auth: jishulang.com
+// @date: 2022/7/30 22:52
+func (c *AmountDecimal) MulBigInt(amounts ...*big.Int) *AmountDecimal {
+	return c.amountsBigInt(mul, amounts...)
+}
+
+// @title: division *big.Int type
+// @auth: jishulang.com
+// @date: 2022/7/30 22:52
+func (c *AmountDecimal) DivBigInt(amounts ...*big.Int) *AmountDecimal {
+	return c.amountsBigInt(div, amounts...)
+}
+
+func (c *AmountDecimal) amountsBigInt(f uint8, amounts ...*big.Int) *AmountDecimal {
 	if c.err != nil {
 		return c
 	}
 
-	amountDecimal := NewBigInt(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
+	var ad *AmountDecimal
+	ad = c
+	for _, amount := range amounts {
+		if f == div && ad.amount == bigrat_zero {
+			return ad
+		}
+
+		if f == div && amount == bigint_zero {
+			ad.err = errors.New(errCodeMap[amount_divisor_cannot])
+			return ad
+		}
+
+		amountDecimal := NewBigInt(amount)
+		if amountDecimal.err != nil {
+			return amountDecimal
+		}
+
+		ad = bigRatCalculation(f, ad.amount, amountDecimal.amount)
+		if ad.err != nil {
+			return ad
+		}
 	}
 
-	return calculationBigRat(add, c.amount, amountDecimal.amount)
+	return ad
 }
 
-func (c *AmountDecimal) SubBigInt(amount *big.Int) *AmountDecimal {
-	if c.err != nil {
-		return c
-	}
-
-	amountDecimal := NewBigInt(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
-	}
-
-	return calculationBigRat(sub, c.amount, amountDecimal.amount)
-}
-
-func (c *AmountDecimal) MulBigInt(amount *big.Int) *AmountDecimal {
-	if c.err != nil {
-		return c
-	}
-
-	amountDecimal := NewBigInt(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
-	}
-
-	return calculationBigRat(mul, c.amount, amountDecimal.amount)
-}
-
-func (c *AmountDecimal) DivBigInt(amount *big.Int) *AmountDecimal {
-	if c.err != nil {
-		return c
-	}
-
-	amountDecimal := NewBigInt(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
-	}
-
-	return calculationBigRat(div, c.amount, amountDecimal.amount)
-}
-
-// @title: 获取*big.Int的实际金额
-// @param: amount *big.Int
-// @param: decimal int
-// @return: string, error
-// @auth: 技术狼(jishulang.com)
+//----------------------------------------------------------------------------------------------------------------------
+// @title: Get the actual amount of *big.int
+// @auth: jishulang.com
 // @date: 2022/7/21 21:58
-func BigIntActualAmount(amount *big.Int, decimal int) (string, error) {
+func BigIntActualAmount(amount *big.Int, decimalOrCoin interface{}) (string, error) {
+	decimal, err := getDecimal(decimalOrCoin)
+	if err != nil {
+		return "", err
+	}
+
 	ad := NewBigInt(amount)
 	if ad.err != nil {
 		return "", ad.err

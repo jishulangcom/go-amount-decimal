@@ -5,13 +5,15 @@ import (
 	"math/big"
 )
 
-//----------------------------------------------------------------------------------------------------------------------
+// @title: initialization string type
+// @auth: jishulang.com
+// @date: 2022/7/30 20:59
 func NewString(amount string) *AmountDecimal {
 	var data AmountDecimal
 
 	amountBigRat, ok := new(big.Rat).SetString(amount)
 	if !ok {
-		data.err = errors.New("xxxxxxxxxxxxxxxxxxx")
+		data.err = errors.New(errCodeMap[string_setstring_fail])
 	}
 
 	data.amount = amountBigRat
@@ -19,55 +21,52 @@ func NewString(amount string) *AmountDecimal {
 	return &data
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-func (c *AmountDecimal) AddString(amount string) *AmountDecimal {
-	if c.err != nil {
-		return c
-	}
-
-	amountDecimal := NewString(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
-	}
-
-	return calculationBigRat(add, c.amount, amountDecimal.amount)
+// @title: addition string type
+// @auth: jishulang.com
+// @date: 2022/7/30 20:59
+func (c *AmountDecimal) AddString(amounts ...string) *AmountDecimal {
+	return c.amountsString(add, amounts...)
 }
 
-func (c *AmountDecimal) SubString(amount string) *AmountDecimal {
-	if c.err != nil {
-		return c
-	}
-
-	amountDecimal := NewString(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
-	}
-
-	return calculationBigRat(sub, c.amount, amountDecimal.amount)
+// @title: subtraction string type
+// @auth: jishulang.com
+// @date: 2022/7/30 20:59
+func (c *AmountDecimal) SubString(amounts ...string) *AmountDecimal {
+	return c.amountsString(sub, amounts...)
 }
 
-func (c *AmountDecimal) MulString(amount string) *AmountDecimal {
-	if c.err != nil {
-		return c
-	}
-
-	amountDecimal := NewString(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
-	}
-
-	return calculationBigRat(mul, c.amount, amountDecimal.amount)
+// @title: multiplication string type
+// @auth: jishulang.com
+// @date: 2022/7/30 20:59
+func (c *AmountDecimal) MulString(amounts ...string) *AmountDecimal {
+	return c.amountsString(mul, amounts...)
 }
 
-func (c *AmountDecimal) DivString(amount string) *AmountDecimal {
+// @title: division string type
+// @auth: jishulang.com
+// @date: 2022/7/30 20:59
+func (c *AmountDecimal) DivString(amounts ...string) *AmountDecimal {
+	return c.amountsString(div, amounts...)
+}
+
+func (c *AmountDecimal) amountsString(f uint8, amounts ...string) *AmountDecimal {
 	if c.err != nil {
 		return c
 	}
 
-	amountDecimal := NewString(amount)
-	if amountDecimal.err != nil {
-		return amountDecimal
+	var ad *AmountDecimal
+	ad = c
+	for _, amount := range amounts {
+		amountDecimal := NewString(amount)
+		if amountDecimal.err != nil {
+			return amountDecimal
+		}
+
+		ad = bigRatCalculation(f, ad.amount, amountDecimal.amount)
+		if ad.err != nil {
+			return ad
+		}
 	}
 
-	return calculationBigRat(div, c.amount, amountDecimal.amount)
+	return ad
 }

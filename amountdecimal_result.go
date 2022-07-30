@@ -8,15 +8,13 @@ import (
 	"strings"
 )
 
-// @title: 输出string
-// @return: string, error
-// @description:
-// @auth: 技术狼(jishulang.com)
+// @title: Output string
+// @auth: jishulang.com
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, err error) {
 	defer func() {
 		if e := recover(); e != nil {
-			err = errors.New(errCodeMap[string_fail])
+			err = errors.New(errCodeMap[to_string_panic])
 		}
 	}()
 
@@ -26,7 +24,7 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 
 	if decimalOrCoin == nil {
 		amountStr = c.amount.String()
-		amountArr := strings.Split( amountStr, "/")
+		amountArr := strings.Split(amountStr, "/")
 		if amountArr[1] == "1" {
 			amountStr = amountArr[0]
 			return amountStr, nil
@@ -46,10 +44,8 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 	return amountStr, nil
 }
 
-// @title: 输出json.Number
-// @return: string, error
-// @description:
-// @auth: 技术狼(jishulang.com)
+// @title: Output json.Number
+// @auth: jishulang.com
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) ToJsonNumber(decimalOrCoin *interface{}) (amountJsonNumber json.Number, err error) {
 	amountStr, err := c.ToString(decimalOrCoin)
@@ -62,27 +58,23 @@ func (c *AmountDecimal) ToJsonNumber(decimalOrCoin *interface{}) (amountJsonNumb
 	return amountJsonNumber, nil
 }
 
-// @title: 输出*big.Rat
-// @return: string, error
-// @description:
-// @auth: 技术狼(jishulang.com)
+// @title: Output *big.Rat
+// @auth: jishulang.com
 // @date: 2022/7/21 21:58
 func (c *AmountDecimal) ToBigRat() (*big.Rat, error) {
 	return c.amount, c.err
 }
 
-// @title: 输出*big.Int
-// @return: string, error
-// @description:
-// @auth: 技术狼(jishulang.com)
+// @title: Output *big.Int
+// @auth: jishulang.com
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToBigInt(decimalOrCoin *interface{}) (*big.Int, error) {
-	amountStr := ""
-	if decimalOrCoin == nil {
-
+func (c *AmountDecimal) ToBigInt(decimalOrCoin interface{}) (*big.Int, error) {
+	decimal, err := getDecimal(decimalOrCoin)
+	if err != nil {
+		return nil, err
 	}
 
-	expStr := fmt.Sprintf("1e%s", amountStr)
+	expStr := fmt.Sprintf("1e%d", decimal)
 	bigexp := new(big.Rat)
 	_, ok := bigexp.SetString(expStr)
 	if !ok {
