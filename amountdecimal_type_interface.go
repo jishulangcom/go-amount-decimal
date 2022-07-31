@@ -5,6 +5,8 @@
 */
 package amountdecimal
 
+import "errors"
+
 // @title: initialization
 // @auth: jishulang.com
 // @date: 2022/7/21 21:58
@@ -41,6 +43,15 @@ func (c *AmountDecimal) Div(amounts ...interface{}) *AmountDecimal {
 }
 
 func (c *AmountDecimal) amounts(f uint8, amounts ...interface{}) *AmountDecimal {
+	if c.err != nil {
+		return c
+	}
+
+	if len(amounts) == 0 {
+		c.err = errors.New(errCodeMap[amounts_empty])
+		return c
+	}
+
 	var ad *AmountDecimal
 	ad = c
 	for _, amount := range amounts {

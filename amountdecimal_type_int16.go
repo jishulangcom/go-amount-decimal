@@ -1,5 +1,7 @@
 package amountdecimal
 
+import "errors"
+
 // @title: initialization int16 type
 // @auth: jishulang.com
 // @date: 2022/7/30 22:52
@@ -36,6 +38,15 @@ func (c *AmountDecimal) DivInt16(amounts ...int16) *AmountDecimal {
 }
 
 func (c *AmountDecimal) amountsInt16(f uint8, amounts ...int16) *AmountDecimal {
+	if c.err != nil {
+		return c
+	}
+
+	if len(amounts) == 0 {
+		c.err = errors.New(errCodeMap[amounts_empty])
+		return c
+	}
+
 	var amounts2 []int64
 	for _, amount := range amounts {
 		amounts2 = append(amounts2, int64(amount))

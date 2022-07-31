@@ -46,6 +46,11 @@ func (c *AmountDecimal) amountsInt64(f uint8, amounts ...int64) *AmountDecimal {
 		return c
 	}
 
+	if len(amounts) == 0 {
+		c.err = errors.New(errCodeMap[amounts_empty])
+		return c
+	}
+
 	var ad *AmountDecimal
 	ad = c
 	for _, amount := range amounts {

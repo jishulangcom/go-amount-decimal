@@ -1,6 +1,9 @@
 package amountdecimal
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"errors"
+)
 
 func NewJsonNumber(amount json.Number) *AmountDecimal {
 	return NewString(amount.String())
@@ -36,6 +39,11 @@ func (c *AmountDecimal) DivJsonNumber(amounts ...json.Number) *AmountDecimal {
 
 func (c *AmountDecimal) amountsJsonNumber(f uint8, amounts ...json.Number) *AmountDecimal {
 	if c.err != nil {
+		return c
+	}
+
+	if len(amounts) == 0 {
+		c.err = errors.New(errCodeMap[amounts_empty])
 		return c
 	}
 
