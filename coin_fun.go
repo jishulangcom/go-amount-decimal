@@ -8,11 +8,11 @@ import (
 // @auth: jishulang.com
 // @date: 2022/7/21 23:15
 func getDecimal(decimalOrCoin interface{}) (int, error) {
-	decimalType := GetType(decimalOrCoin)
+	decimalType := getType(decimalOrCoin)
 
 	if decimalType == type_string {
-		coin := InterfaceToStr(decimalOrCoin)
-		coin = StrToUpper(coin)
+		coin := interfaceToStr(decimalOrCoin)
+		coin = strToUpper(coin)
 		if coinInfo, ok := CoinMap[coin]; ok {
 			return coinInfo.Decimal, nil
 		}

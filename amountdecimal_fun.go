@@ -8,15 +8,15 @@ import (
 	"strings"
 )
 
-func GetType(variable interface{}) string {
+func getType(variable interface{}) string {
 	return reflect.TypeOf(variable).Kind().String()
 }
 
-func StrToUpper(str string) string {
+func strToUpper(str string) string {
 	return strings.ToUpper(str)
 }
 
-func Float64Decimal(f float64) int {
+func float64Decimal(f float64) int {
 	numstr := fmt.Sprint(f)
 	tmp := strings.Split(numstr, ".")
 	if len(tmp) <= 1 {
@@ -25,7 +25,7 @@ func Float64Decimal(f float64) int {
 	return len(tmp[1])
 }
 
-func InterfaceToStr(val interface{}) string {
+func interfaceToStr(val interface{}) string {
 	var str string
 
 	if val == nil {
