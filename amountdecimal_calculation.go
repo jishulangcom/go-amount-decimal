@@ -23,19 +23,22 @@ func amountCalculation(f uint8, c *AmountDecimal, amount interface{}) *AmountDec
 
 	switch f {
 	case add:
-
-	case sub:
-
-	case mul:
-		data.decimal = c.decimal + ad.decimal
-	case div:
-		data.decimal = DefaultDecimal
-	default:
 		if c.decimal > ad.decimal {
 			data.decimal = c.decimal
 		} else {
 			data.decimal = ad.decimal
 		}
+	case sub:
+		if c.decimal > ad.decimal {
+			data.decimal = c.decimal
+		} else {
+			data.decimal = ad.decimal
+		}
+	case mul:
+		data.decimal = c.decimal + ad.decimal
+	case div:
+		data.decimal = DefaultDecimal
+
 	}
 
 	return data
