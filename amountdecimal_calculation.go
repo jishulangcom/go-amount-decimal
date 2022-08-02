@@ -3,6 +3,7 @@ package amountdecimal
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"math/big"
 )
 
@@ -64,20 +65,11 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 		}
 		return NewString(val)
 	case float64:
-		val, ok := amount.(float64)
-		if !ok {
-			data.err = errors.New(errCodeMap[amount_type_conversion])
-			return &data
-		}
-
-		return NewFloat64(val)
+		val2 := fmt.Sprintf("%f", amount)
+		return NewString(val2)
 	case float32:
-		val, ok := amount.(float32)
-		if !ok {
-			data.err = errors.New(errCodeMap[amount_type_conversion])
-			return &data
-		}
-		return NewFloat32(val)
+		val := fmt.Sprintf("%f", amount)
+		return NewString(val)
 	case int:
 		val, ok := amount.(int)
 		if !ok {
@@ -191,28 +183,20 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 func bigRatCalculation(f uint8, amount *big.Rat, amount2 *big.Rat) *AmountDecimal {
 	var data AmountDecimal
 
-	switch f {
-	case add:
-		data.amount = new(bigRat).Add(amount, amount2)
-	case sub:
-		data.amount = new(bigRat).Sub(amount, amount2)
-	case mul:
-		data.amount = new(bigRat).Mul(amount, amount2)
-	case div:
-		// dividend is 0
-		if amount == bigrat_zero {
-			data.amount = amount
-			return &data
-		}
-
-		// divide is 0
-		if amount2 == bigrat_zero {
-			data.err = errors.New(errCodeMap[amount_divisor_cannot])
-			return &data
-		}
-
-		data.amount = new(bigRat).Quo(amount, amount2)
+	// dividend is 0
+	//if amount == bigrat_zero {
+	if f == div && amount.String() == bigrat_zero_string {
+		data.amount = amount
+		return &data
 	}
 
+	// divide is 0
+	//if amount2 == bigrat_zero {
+	if f == div && amount2.String() == bigrat_zero_string {
+		data.err = errors.New(errCodeMap[amount_divisor_cannot])
+		return &data
+	}
+
+	data.amount = bigRatFunMap[f](amount, amount2)
 	return &data
 }

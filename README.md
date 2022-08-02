@@ -56,7 +56,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	amountdecimal "github.com/jishulangcom/go-amount-decimal"
+	amountdecimal "github.com/jishulangcom/go-amount-decimal" // go:lazyinit
 	"math/big"
 )
 
@@ -68,13 +68,13 @@ func main() {
 	bi := new(big.Int).SetInt64(4) // *big.Int
 	var decimal int = 5
 
-	//---------------------【Basic Usage】-----------------------------------------------------------------------
+	//---------------------【Basic Usage】----------------------------------------------------------------
 	// 0.5+1 = (1.5)-2 = (-0.5)*3 = (-1.5)/4
 	// Calculated in order from left to right
 	amountB1, errB1 := amountdecimal.New(f).Add(s).Sub(i).Mul(j).Div(bi).ToString(decimal)
 	fmt.Println("【Basic Usage】：", amountB1, errB1) // -0.37500 <nil>
 
-	//---------------------【Specify Amount Type】-----------------------------------------------------------
+	//---------------------【Specify Amount Type】--------------------------------------------------------
 	// 0.5 +1 +2 +3 +4 +5
 	amountS1, errS1 := amountdecimal.NewFloat64(f).AddInt(i).ToString(decimal)
 	fmt.Println("【Specify Amount Type】：", amountS1, errS1) // 2.50000 <nil>
@@ -84,7 +84,7 @@ func main() {
 	amountM1, errM1 := amountdecimal.New(f).Add(s, i, j, bi).ToString(decimal)
 	fmt.Println("【Multiple Amounts】：", amountM1, errM1) // 10.50000 <nil>
 
-	//---------------------【Coin Decimal】------------------------------------------------------------------------
+	//---------------------【Coin Decimal】----------------------------------------------------------------
 	amount := 100
 	fee := 0.001
 	amountC1, errC1 := amountdecimal.New(amount).Mul(fee).ToString("BTC")
@@ -94,8 +94,9 @@ func main() {
 	fmt.Println("【Coin Decimal2】：", amountC2, errC2) // 10000000 <nil>
 
 	amountC3, errC3 := amountdecimal.BigIntActualAmount(amountC2, amountdecimal.COIN_BTC_DECIMAL)
-	fmt.Println("【Coin Decimal3】：", amountC3, errC3) // 10000000 <nil>
+	fmt.Println("【Coin Decimal3】：", amountC3, errC3) // 0.10000000 <nil>
 }
+
 ```
 
 

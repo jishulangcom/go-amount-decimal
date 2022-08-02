@@ -54,11 +54,11 @@ func (c *AmountDecimal) amountsBigInt(f uint8, amounts ...*big.Int) *AmountDecim
 	var ad *AmountDecimal
 	ad = c
 	for _, amount := range amounts {
-		if f == div && ad.amount == bigrat_zero {
+		if f == div && ad.amount.String() == bigrat_zero_string {
 			return ad
 		}
 
-		if f == div && amount == bigint_zero {
+		if f == div && amount.String() == bigrat_zero_string {
 			ad.err = errors.New(errCodeMap[amount_divisor_cannot])
 			return ad
 		}

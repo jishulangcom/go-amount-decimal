@@ -537,8 +537,8 @@ const (
 )
 
 type CoinInfo struct {
-	Code    string `json:"code"`    // 标识
-	Decimal int    `json:"decimal"` // 精度
+	Code    string `json:"code"`
+	Decimal int    `json:"decimal"`
 }
 
 var CoinMap map[string]CoinInfo

@@ -8,7 +8,7 @@ type bigRat struct {
 	big.Rat
 }
 
-// const bigrat_zero_string = "0/1"
+const bigrat_zero_string = "0/1"
 
 var bigrat_zero *big.Rat
 var bigint_zero *big.Int
