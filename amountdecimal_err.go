@@ -13,6 +13,7 @@ const (
 	amount_divisor_cannot
 	coin_wrong
 	coin_type_wrong
+	decimalorcoin_required
 )
 
 var errCodeMap map[uint16]string
@@ -33,4 +34,7 @@ func init() {
 
 	errCodeMap[coin_wrong] = "coin wrong"
 	errCodeMap[coin_type_wrong] = "decimal type wrong"
+
+	errCodeMap[decimalorcoin_required] = "decimalOrCoin required"
+
 }

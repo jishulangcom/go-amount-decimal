@@ -22,16 +22,17 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 		return "", c.err
 	}
 
+	//
 	if decimalOrCoin == nil {
-		amountStr = c.amount.String()
-		amountArr := strings.Split(amountStr, "/")
-		if amountArr[1] == "1" {
-			amountStr = amountArr[0]
-			return amountStr, nil
-		}
+		return "", errors.New(errCodeMap[decimalorcoin_required])
+	}
 
-		//decimalOrCoin = DefaultDecimal
-		decimalOrCoin = c.decimal
+	//
+	amountStr = c.amount.String()
+	amountArr := strings.Split(amountStr, "/")
+	if amountArr[1] == "1" {
+		amountStr = amountArr[0]
+		return amountStr, nil
 	}
 
 	decimal, err := getDecimal(decimalOrCoin)

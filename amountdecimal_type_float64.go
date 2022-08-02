@@ -8,7 +8,6 @@ import "errors"
 func NewFloat64(amount float64) *AmountDecimal {
 	var data AmountDecimal
 
-	data.decimal = float64Decimal(amount)
 	data.amount = new(bigRat).SetFloat64(amount)
 
 	return &data

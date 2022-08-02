@@ -9,7 +9,6 @@ import "math/big"
 
 type AmountDecimal struct {
 	amount  *big.Rat
-	decimal int
 	err     error
 }
 
