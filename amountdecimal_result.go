@@ -37,7 +37,7 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 
 	decimal, err := getDecimal(decimalOrCoin)
 	if err != nil {
-		return "", c.err
+		return "", err
 	}
 
 	amountStr = c.amount.FloatString(decimal)
