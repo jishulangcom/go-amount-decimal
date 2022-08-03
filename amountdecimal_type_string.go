@@ -67,6 +67,15 @@ func (c *AmountDecimal) amountsString(f uint8, amounts ...string) *AmountDecimal
 			return amountDecimal
 		}
 
+		if f == div && ad.amount.String() == bigrat_zero_string {
+			return ad
+		}
+
+		if f == div && amount == bigrat_zero_string {
+			ad.err = errors.New(errCodeMap[amount_divisor_zero])
+			return ad
+		}
+
 		ad = bigRatCalculation(f, ad.amount, amountDecimal.amount)
 		if ad.err != nil {
 			return ad

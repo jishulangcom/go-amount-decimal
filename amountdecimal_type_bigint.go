@@ -59,7 +59,7 @@ func (c *AmountDecimal) amountsBigInt(f uint8, amounts ...*big.Int) *AmountDecim
 		}
 
 		if f == div && amount.String() == bigrat_zero_string {
-			ad.err = errors.New(errCodeMap[amount_divisor_cannot])
+			ad.err = errors.New(errCodeMap[amount_divisor_zero])
 			return ad
 		}
 

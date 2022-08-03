@@ -3,6 +3,7 @@ package amountdecimal
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 )
 
 func NewJsonNumber(amount json.Number) *AmountDecimal {
@@ -47,19 +48,17 @@ func (c *AmountDecimal) amountsJsonNumber(f uint8, amounts ...json.Number) *Amou
 		return c
 	}
 
-	var ad *AmountDecimal
-	ad = c
+	var amounts2 []string
+	amountStr := ""
 	for _, amount := range amounts {
-		amountDecimal := NewString(amount.String())
-		if amountDecimal.err != nil {
-			return amountDecimal
+		if f == div && amount == json.Number(0) {
+			c.err = errors.New(errCodeMap[amount_divisor_zero])
+			return c
 		}
 
-		ad = bigRatCalculation(f, ad.amount, amountDecimal.amount)
-		if ad.err != nil {
-			return ad
-		}
+		amountStr = fmt.Sprintf("%f", amount)
+		amounts2 = append(amounts2, amountStr)
 	}
 
-	return ad
+	return c.amountsString(f, amounts2...)
 }

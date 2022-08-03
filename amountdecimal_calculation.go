@@ -163,17 +163,13 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 func bigRatCalculation(f uint8, amount *big.Rat, amount2 *big.Rat) *AmountDecimal {
 	var data AmountDecimal
 
-	// dividend is 0
-	//if amount == bigrat_zero {
 	if f == div && amount.String() == bigrat_zero_string {
 		data.amount = amount
 		return &data
 	}
 
-	// divide is 0
-	//if amount2 == bigrat_zero {
 	if f == div && amount2.String() == bigrat_zero_string {
-		data.err = errors.New(errCodeMap[amount_divisor_cannot])
+		data.err = errors.New(errCodeMap[amount_divisor_zero])
 		return &data
 	}
 

@@ -1,6 +1,7 @@
 package amountdecimal
 
 import (
+	"encoding/json"
 	"math/big"
 )
 
@@ -10,15 +11,12 @@ type bigRat struct {
 
 const bigrat_zero_string = "0/1"
 
-var bigrat_zero *big.Rat
 var bigint_zero *big.Int
+var jsonnumber_zero json.Number
 
 // 数据类型
 const (
-	// type_ptr     = "ptr"
 	type_string = "string"
-	// type_float32 = "float32"
-	// type_float64 = "float64"
 )
 
 var DefaultDecimal = 13               // 默认输出精度
@@ -35,6 +33,6 @@ func init() {
 		numberTypeMap[v] = struct{}{}
 	}
 
-	bigrat_zero = new(bigRat).SetInt64(0)
 	bigint_zero = new(big.Int).SetInt64(0)
+	jsonnumber_zero = json.Number("0")
 }

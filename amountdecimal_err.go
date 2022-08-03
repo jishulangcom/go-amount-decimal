@@ -10,7 +10,7 @@ const (
 	amounts_empty
 	amount_type_wrong
 	amount_type_conversion
-	amount_divisor_cannot
+	amount_divisor_zero
 	coin_wrong
 	coin_type_wrong
 	decimalorcoin_required
@@ -30,7 +30,7 @@ func init() {
 	errCodeMap[amount_not_numeric] = "amount not numeric type"
 	errCodeMap[amount_type_wrong] = "amount type not supported"
 	errCodeMap[amount_type_conversion] = "amount type conversion failed"
-	errCodeMap[amount_divisor_cannot] = "divisor cannot be 0"
+	errCodeMap[amount_divisor_zero] = "divisor cannot be 0"
 
 	errCodeMap[coin_wrong] = "coin wrong"
 	errCodeMap[coin_type_wrong] = "decimal type wrong"

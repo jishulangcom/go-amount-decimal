@@ -1,16 +1,16 @@
 package amountdecimal
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 // @title: initialization float64 type
 // @auth: jishulang.com
 // @date: 2022/7/30 22:52
 func NewFloat64(amount float64) *AmountDecimal {
-	var data AmountDecimal
-
-	data.amount = new(bigRat).SetFloat64(amount)
-
-	return &data
+	amountStr := fmt.Sprintf("%f", amount)
+	return NewString(amountStr)
 }
 
 // @title: addition float64 type
@@ -51,28 +51,17 @@ func (c *AmountDecimal) amountsFloat64(f uint8, amounts ...float64) *AmountDecim
 		return c
 	}
 
-	var ad *AmountDecimal
-	ad = c
+	var amounts2 []string
+	amountStr := ""
 	for _, amount := range amounts {
-		if f == div && ad.amount == bigrat_zero {
-			return ad
-		}
-
 		if f == div && amount == 0 {
-			ad.err = errors.New(errCodeMap[amount_divisor_cannot])
-			return ad
+			c.err = errors.New(errCodeMap[amount_divisor_zero])
+			return c
 		}
 
-		amountDecimal := NewFloat64(amount)
-		if amountDecimal.err != nil {
-			return amountDecimal
-		}
-
-		ad = bigRatCalculation(f, ad.amount, amountDecimal.amount)
-		if ad.err != nil {
-			return ad
-		}
+		amountStr = fmt.Sprintf("%f", amount)
+		amounts2 = append(amounts2, amountStr)
 	}
 
-	return ad
+	return c.amountsString(f, amounts2...)
 }

@@ -8,8 +8,8 @@ package amountdecimal
 import "math/big"
 
 type AmountDecimal struct {
-	amount  *big.Rat
-	err     error
+	amount *big.Rat
+	err    error
 }
 
 // calculation func
