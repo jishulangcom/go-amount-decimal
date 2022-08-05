@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
-	"strings"
 )
 
 // @title: Output string
@@ -28,13 +27,6 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 	}
 
 	//
-	amountStr = c.amount.String()
-	amountArr := strings.Split(amountStr, "/")
-	if amountArr[1] == "1" {
-		amountStr = amountArr[0]
-		return amountStr, nil
-	}
-
 	decimal, err := getDecimal(decimalOrCoin)
 	if err != nil {
 		return "", err
