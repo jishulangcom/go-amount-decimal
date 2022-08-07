@@ -45,10 +45,10 @@ func newAmountDecimal(amount interface{}) *AmountDecimal {
 		}
 		return NewString(val)
 	case float64:
-		val2 := fmt.Sprintf("%f", amount)
+		val2 := fmt.Sprintf("%v", amount)
 		return NewString(val2)
 	case float32:
-		val := fmt.Sprintf("%f", amount)
+		val := fmt.Sprintf("%v", amount)
 		return NewString(val)
 	case int:
 		val, ok := amount.(int)

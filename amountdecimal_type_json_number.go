@@ -56,7 +56,7 @@ func (c *AmountDecimal) amountsJsonNumber(f uint8, amounts ...json.Number) *Amou
 			return c
 		}
 
-		amountStr = fmt.Sprintf("%f", amount)
+		amountStr = fmt.Sprintf("%v", amount)
 		amounts2 = append(amounts2, amountStr)
 	}
 

@@ -9,7 +9,7 @@ import (
 // @auth: jishulang.com
 // @date: 2022/7/30 22:52
 func NewFloat64(amount float64) *AmountDecimal {
-	amountStr := fmt.Sprintf("%f", amount)
+	amountStr := fmt.Sprintf("%v", amount)
 	return NewString(amountStr)
 }
 
@@ -59,7 +59,7 @@ func (c *AmountDecimal) amountsFloat64(f uint8, amounts ...float64) *AmountDecim
 			return c
 		}
 
-		amountStr = fmt.Sprintf("%f", amount)
+		amountStr = fmt.Sprintf("%v", amount)
 		amounts2 = append(amounts2, amountStr)
 	}
 
