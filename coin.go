@@ -545,84 +545,59 @@ var CoinMap map[string]CoinInfo
 var CoinList []CoinInfo
 
 func init() {
-	CoinMap = make(map[string]CoinInfo)
-
-	// BTC
-	CoinMap[COIN_BTC] = CoinInfo{
-		Code:    COIN_BTC,
-		Decimal: COIN_BTC_DECIMAL,
-	}
-
-	// BTC_USDT
-	CoinMap[COIN_BTC_USDT] = CoinInfo{
-		Code:    COIN_BTC_USDT,
-		Decimal: COIN_BTC_USDT_DECIMAL,
-	}
-
-	// ETH
-	CoinMap[COIN_ETH] = CoinInfo{
-		Code:    COIN_ETH,
-		Decimal: COIN_ETH_DECIMAL,
-	}
-
-	// ETH_USDT
-	CoinMap[COIN_ETH_USDT] = CoinInfo{
-		Code:    COIN_ETH_USDT,
-		Decimal: COIN_ETH_USDT_DECIMAL,
-	}
-
-	// ONT_ONT2
-	CoinMap[COIN_ONT_ONT2] = CoinInfo{
-		Code:    COIN_ONT_ONT2,
-		Decimal: COIN_ONT_ONT2_DECIMAL,
-	}
-
-	// ONT_ONG2
-	CoinMap[COIN_ONT_ONG2] = CoinInfo{
-		Code:    COIN_ONT_ONG2,
-		Decimal: COIN_ONT_ONG2_DECIMAL,
-	}
-
-	// TONT_ONG2
-	CoinMap[COIN_TONT_ONG2] = CoinInfo{
-		Code:    COIN_TONT_ONG2,
-		Decimal: COIN_TONT_ONG2_DECIMAL,
-	}
-
-	// TONT_ONG2
-	CoinMap[COIN_TONT_ONT2] = CoinInfo{
-		Code:    COIN_TONT_ONT2,
-		Decimal: COIN_TONT_ONT2_DECIMAL,
-	}
-
-	// TRON
-	CoinMap[COIN_TRON] = CoinInfo{
-		Code:    COIN_TRON,
-		Decimal: COIN_TRON_DECIMAL,
-	}
-
-	// TETH
-	CoinMap[COIN_TETH] = CoinInfo{
-		Code:    COIN_TETH,
-		Decimal: COIN_TETH_DECIMAL,
-	}
-
-	// TETH_CTT
-	CoinMap[COIN_TETH_CTT] = CoinInfo{
-		Code:    COIN_TETH_CTT,
-		Decimal: COIN_TETH_CTT_DECIMAL,
-	}
-
-	// XLM
-	CoinMap[COIN_XLM] = CoinInfo{
-		Code:    COIN_XLM,
-		Decimal: COIN_XLM_DECIMAL,
-	}
-
-	// XTN
-	CoinMap[COIN_XTN] = CoinInfo{
-		Code:    COIN_XTN,
-		Decimal: COIN_XTN_DECIMAL,
+	CoinMap = map[string]CoinInfo{
+		COIN_BTC: {
+			Code:    COIN_BTC,
+			Decimal: COIN_BTC_DECIMAL,
+		},
+		COIN_BTC_USDT: {
+			Code:    COIN_BTC_USDT,
+			Decimal: COIN_BTC_USDT_DECIMAL,
+		},
+		COIN_ETH: {
+			Code:    COIN_ETH,
+			Decimal: COIN_ETH_DECIMAL,
+		},
+		COIN_ETH_USDT: {
+			Code:    COIN_ETH_USDT,
+			Decimal: COIN_ETH_USDT_DECIMAL,
+		},
+		COIN_ONT_ONT2: {
+			Code:    COIN_ONT_ONT2,
+			Decimal: COIN_ONT_ONT2_DECIMAL,
+		},
+		COIN_ONT_ONG2: {
+			Code:    COIN_ONT_ONG2,
+			Decimal: COIN_ONT_ONG2_DECIMAL,
+		},
+		COIN_TONT_ONG2: {
+			Code:    COIN_TONT_ONG2,
+			Decimal: COIN_TONT_ONG2_DECIMAL,
+		},
+		COIN_TONT_ONT2: {
+			Code:    COIN_TONT_ONT2,
+			Decimal: COIN_TONT_ONT2_DECIMAL,
+		},
+		COIN_TRON: {
+			Code:    COIN_TRON,
+			Decimal: COIN_TRON_DECIMAL,
+		},
+		COIN_TETH: {
+			Code:    COIN_TETH,
+			Decimal: COIN_TETH_DECIMAL,
+		},
+		COIN_TETH_CTT: {
+			Code:    COIN_TETH_CTT,
+			Decimal: COIN_TETH_CTT_DECIMAL,
+		},
+		COIN_XLM: {
+			Code:    COIN_XLM,
+			Decimal: COIN_XLM_DECIMAL,
+		},
+		COIN_XTN: {
+			Code:    COIN_XTN,
+			Decimal: COIN_XTN_DECIMAL,
+		},
 	}
 
 }

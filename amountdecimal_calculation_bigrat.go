@@ -7,11 +7,12 @@ import (
 var bigRatFunMap map[uint8]func(*big.Rat, *big.Rat) *big.Rat
 
 func init() {
-	bigRatFunMap = make(map[uint8]func(*big.Rat, *big.Rat) *big.Rat)
-	bigRatFunMap[add] = bigRatAdd
-	bigRatFunMap[sub] = bigRatSub
-	bigRatFunMap[mul] = bigRatMul
-	bigRatFunMap[div] = bigRatDiv
+	bigRatFunMap = map[uint8]func(*big.Rat, *big.Rat) *big.Rat{
+		add: bigRatAdd,
+		sub: bigRatSub,
+		mul: bigRatMul,
+		div: bigRatDiv,
+	}
 }
 
 func bigRatAdd(amount *big.Rat, amount2 *big.Rat) *big.Rat {

@@ -19,22 +19,22 @@ const (
 var errCodeMap map[uint16]string
 
 func init() {
-	errCodeMap = make(map[uint16]string)
-	errCodeMap[bigrat_setstring_fail] = "big.Rat setString fail"
-	errCodeMap[bigint_setstring_fail] = "big.Int setString fail"
-	errCodeMap[string_setstring_fail] = "string setString fail"
+	errCodeMap = map[uint16]string{
+		bigrat_setstring_fail: "big.Rat setString fail",
+		bigint_setstring_fail: "big.Int setString fail",
+		string_setstring_fail: "string setString fail",
 
-	errCodeMap[to_string_panic] = "ToString() panic"
+		to_string_panic: "ToString() panic",
 
-	errCodeMap[amounts_empty] = "amounts empty"
-	errCodeMap[amount_not_numeric] = "amount not numeric type"
-	errCodeMap[amount_type_wrong] = "amount type not supported"
-	errCodeMap[amount_type_conversion] = "amount type conversion failed"
-	errCodeMap[amount_divisor_zero] = "divisor cannot be 0"
+		amounts_empty:          "amounts empty",
+		amount_not_numeric:     "amount not numeric type",
+		amount_type_wrong:      "amount type not supported",
+		amount_type_conversion: "amount type conversion failed",
+		amount_divisor_zero:    "divisor cannot be 0",
 
-	errCodeMap[coin_wrong] = "coin wrong"
-	errCodeMap[coin_type_wrong] = "decimal type wrong"
+		coin_wrong:      "coin wrong",
+		coin_type_wrong: "decimal type wrong",
 
-	errCodeMap[decimalorcoin_required] = "decimalOrCoin required"
-
+		decimalorcoin_required: "decimalOrCoin required",
+	}
 }
