@@ -40,7 +40,7 @@ func (c *AmountDecimal) ToString(decimalOrCoin interface{}) (amountStr string, e
 // @title: Output json.Number
 // @auth: jishulang.com
 // @date: 2022/7/21 21:58
-func (c *AmountDecimal) ToJsonNumber(decimalOrCoin *interface{}) (amountJsonNumber json.Number, err error) {
+func (c *AmountDecimal) ToJsonNumber(decimalOrCoin interface{}) (amountJsonNumber json.Number, err error) {
 	amountStr, err := c.ToString(decimalOrCoin)
 	if err != nil {
 		return json.Number(0), c.err
